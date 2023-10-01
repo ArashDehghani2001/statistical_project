@@ -1,0 +1,820 @@
+ \documentclass[11pt]{article}
+\usepackage{pythontex,listings}
+\usepackage{amssymb}
+\usepackage{graphicx , caption , amsmath ,float, pgfplots , wrapfig , xepersian ,bbm}
+\settextfont{Persian Modern}
+\setdigitfont{Persian Modern}
+\captionsetup{labelsep=none}
+\begin{document}
+
+\setlength{\textwidth}{180mm}
+\setlength{\textheight}{235mm }
+\setlength{\textwidth}{12cm}
+\setlength{\textheight}{19.5cm}
+
+\begin{persian}
+\title{
+\centerline{\includegraphics[scale=0.4]{project_pictures/title.jpg}}
+گزارش پروژه
+}
+\author{نام و نام خانوادگی: علیرضا شکرانی و آرش دهقانی}
+\date{}
+\maketitle
+\newpage
+$\newcommand{\E}{\mathbbm{E}}$
+$\newcommand{\Var}{\mathrm{Var}}$
+\section*{2}
+\textbf{پرسش تئوری 1.}
+برای این کار باید بتواند $m$ رابطه ی مشخص را درست حدس بزند که میشود 
+$$p^m(1-p)^{n_e-m}$$
+ که 
+$n_e = \frac{n(n-1)}{2}$
+این با این فرض است که برا ما مهم نباشد اگر دوستی های بیشتری به دست بیاید و بین دو کسی که دوستی وجود ندارد هم نباید دوستی برقرار کند.
+\newline
+\textbf{پرسش تئوری 2.}
+تعداد کل حالات 
+$
+n\frac{n(n-1)}{2} \choose  m
+$
+است پس احتمال برابر است با :
+$$
+\frac{1}{{\frac{n(n-1)}{2} \choose m}}
+$$
+\newline
+\textbf{پرسش تئوری 3.}
+فرض کنید $k$ نزدیک ترین عدد صحیح کوچکتر از $0.2m$ باشد در این صورت $k$ از $m$ را باید درست حدس بزند و بقیه $m-k$ تا را نباید دوستی به دست آورد. پس
+$$
+{m \choose k} \,p^k\,(1-p)^{m-k}
+$$
+ن با این فرض است که برا ما مهم نباشد اگر دوستی های بیشتری به دست بیاید بلکه مهم آن است که 20 درصد  دوستی هایی را که وجود دارد، بیابد.
+\newline
+\textbf{پرسش شبیه سازی 1}
+ابتدا با دستور
+\begin{latin}
+\lstset{language=python}
+\begin{lstlisting}
+nx.binomial_graph(n,p)
+\end{lstlisting}
+\end{latin}
+در یک حلقه ده بار گراف رندوم میسازیم. سپس تعداد یال ها را میشماریم. چون هر یال هم ارز با یک دوستی است.
+
+\begin{figure}[H]
+\centerline{\includegraphics[scale=0.8]{project_pictures/1_1.png}}
+\caption{نتیجه در پایین تصویر }
+\end{figure}
+که با $m$ تفاوت معنا داری دارد.
+\newline
+\textbf{پرسش تئوری 4.}
+احتمال اینکه هر یال به وجود بیاید  $p$ است پس اگر 
+$X_{i,j}$ 
+دوستی بین نفر $i$ ام و $j$ام باشد، داریم:
+
+$$
+\mathbbm{E}[X_{i,j}] = p
+$$
+طبق تعریف 
+$X_{i,j}$
+برای $s$ که تعداد یال های متاگراف است، داریم:
+$$
+s = \frac{\sum_{i,j} X_{i,j}}{2} \Rightarrow \mathbbm{E}[s] = \frac{\sum_{i,j }\mathbbm{E}[ X_{i,j}]}{2} =  \frac{n(n-1)}{2} p
+$$
+$$
+\Rightarrow \mathbbm{E}[s] = \frac{n(n-1)}{2} p = \frac{1000(999)}{2}0.0034 = 1698.3
+$$
+که با مقدار شبیه سازی شده کمتر از 1 درصد تفاوت دارد.\\
+پس شرط تساوی به صورت زیر است:
+$$
+m = \frac{n(n-1)}{2} p
+$$
+\section*{3}
+
+\textbf{پرسش شبیه سازی 2.}
+ابتدا آرایه ای متشکل از ده گراف رندوم میسازیم سپس به ازای هر گراف رندوم، میانگین یال ها یا $L$ را حساب کنبم. برای این کار کافی است تمام درجات را جمع و بر $n$ تقسیم کنیم.سپس در همان حلقه، تعداد گره ها با درجات بزرگتر از $L$ را حساب میکنیم.
+
+\begin{figure}[H]
+\centerline{\includegraphics[scale=1]{project_pictures/2_1.png}}
+\caption{نتیجه در پایین تصویر }
+\end{figure}  
+
+همچنین میانگین تعداد افرادی که $i$ دوست دارند، بر حسب $u$ برای گراف ها به شکل زیر است.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=1]{project_pictures/2_2.png}}
+\caption{ }
+\end{figure} 
+
+\textbf{پرسش تئوری 5.}
+دوباره بااستفاده از تعریف 
+$X_{i,j}$
+برای 
+$Y_{i}$
+که تعداد دوست های راس $i$ ام باشد، داریم:
+$$
+Y_i = \sum_{j=1}^{n-1} X_{i,j} \Rightarrow \mathbbm{E}[Y_i] = \sum_{j=1}^{n-1} \mathbbm{E} [X_{i,j}] 
+$$
+$$
+\Rightarrow \mathbbm{E}[Y_i] = (n-1) p = 999(0.00016) = 0.15984
+$$
+\newline
+\textbf{پرسش تئوری 6.}
+مجموع روابط دوستی(مجموع یال ها) توزیع 
+$
+Binomial(\frac{n(n-1)}{2},p)
+$
+دارد. اگر مجموع یال ها را $K$ بگیریم. برای $L$ داریم:
+$$
+\mathbbm{P}[L=l] = \mathbbm{P}[\frac{2K}{n}=l] = \mathbbm{P}[K=\frac{nl}{2}] = {\frac{n(n-1)}{2} \choose \frac{nl}{2}} p^{\frac{nl}{2}}(1-p)^{\frac{n(n-1)}{2} - \frac{nl}{2}}
+$$
+که این تابع در نزدیکی میانگین یعنی
+$0.15984$
+(از بخش قبل) بیشینه میشود. پس ار آن به طور نزولی افت میکند و به صفر میرود. از شبیه سازی هم میتوان نتیجه گرفت که به علت کوچک بودن $np$ عدد $L$ تقریبا یک عددی بین 0 و 1 است. به عبارت دیگر احتمال اینکه این عدد مساوی 1 یا بزرگتر از 1 باشد بسیار کوچک است. حال با فرض اینکه $L$ کوچکتر از یک است، هر شخصی که یک دوست یا بیشتر داشته باشد، اجتماعی خواهد بود. یعنی کافبست احتمال متمم پیشامد یعنی نداشتن دوست را از 1 کم کنیم.
+$$
+\mathbbm{P}_{social} \simeq 1 - \mathbbm{P}[\text{\rl{نداشتن دوست}}]  = 
+1 - (1-p)^{n-1} \simeq 0.1477
+$$
+متغیر $Y_i$ را متغیر تصادفی برنولی برای اجتماعی بودن  نفر $i$ ام در نظر بگیرید. و $S$ را تعداد افراد اجتماعی فرض کنید. داریم:
+$$
+S = \sum_{i=1}^{n} Y_i \Rightarrow \mathbbm{E}[S] = \sum_{i=1}^{n} \mathbbm{E}[Y_i] = n \, P_{social} = 1000(0.14777) \simeq 147.8 
+$$
+که با شبیه سازی 2 (شکل 2) تنها تفاوت اندکی دارد.
+\section*{4}
+\textbf{پرسش شبیه سازی 3.}
+برای روابط تراگذری باید تعداد مثلث ها را بشماریم. برای این کار از دستور زیر استفاده میکنیم:
+\begin{latin}
+\lstset{language=python}
+\begin{lstlisting}
+networkx.triangles(g)
+\end{lstlisting}
+\end{latin}
+که خرووجی آن یک
+\texttt{dictionary}
+است با key  هایی از جنس node و value هایی که تعداد مثلث مرتبط با هر گره را نشان میدهند. پس کافی است value های آن را جمع بزنیم و بر 3 تقسیم کنیم.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=1]{project_pictures/3_1.png}}
+\caption{نتیجه در پایین تصویر }
+\end{figure}  
+تابعی برای پیدا کردن رقابت مینویسیم. این تابع ابتدا یک حلقه روی هر گره دارد سپس با دو حلقه دیگر روی همسایه ها آن گره، چک میکند که آیا دو گره همسایه به هم متصل هستند یا خیر. در صورت عدم اتصال ما یک رابطه رقابت خواهیم داشت:
+\begin{figure}[H]
+\centerline{\includegraphics[scale=1]{project_pictures/3_2.png}}
+\caption{تابع بالا برای چک کردن اتصال }
+\end{figure}  
+این را برای هر گراف اعمال خواهیم کرد.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=1]{project_pictures/3_3.png}}
+\caption{نتیجه در پایین تصویر }
+\end{figure}  
+
+\textbf{پرسش شبیه سازی 4.}
+حال برای تراگذری متاگرافی با 
+$n=2000$
+و 
+$p=0.2$
+کد بخش قبل را اجرا میکنیم. با این اختلاف که تعداد مثلثات را در یک آرایه برای بخش بعد ذخیره میکنیم.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=1]{project_pictures/4_1.png}}
+\caption{نتیجه برای هر گراف و میانگین در پایین تصویر }
+\end{figure}  
+برای میانگین رابطه ی دوستی رفاقت در این بخش از الگوریتمی متفاوت استفاده میکنیم تا مرتبه زمانی اجرا شدن کد پایین بیاید. \\
+برای هر راس تعداد مسیر دوتایی از یکی از راس های همسایه به دیگر مسیر همسایه اش را میشماریم. اگر $d_i$ درجه راس  $i$ ام باشد، تعداد این مسیر ها 
+$d_i(d_i-1)$
+خواهد بود. بعضی از این مسیر ها بخشی از یک حلقه مثلثی خواهند بود و هر مثلث سه بار شمرده خواهد شد. به همین دلیل باید سه برابر تعداد مثلث هایی(که در کد تراگذری به دست آوردیم) از تعداد مسیر ها کم کنیم تا تعداد روابط رقابتی به دست آید.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=1]{project_pictures/4_2.png}}
+\caption{نتیجه در پایین تصویر }
+\end{figure} 
+
+\textbf{پرسش تئوری 7.}
+
+\textbf{راه شهودی:}
+
+ابتدا احتمال اینکه یک سه تایی(سه راس) تشکیل مثلث بدهد، پیدا میکنیم.($p^3$) این احتمال در واقع به طور میانگین نسبت تعداد مثلثات به تعداد کل سه تایی هاست:
+$$
+{n \choose 3} p^3
+$$
+\textbf{راه ریاضی:}
+
+برای این بخش متوسط تعداد مثلث ها در یک گراف را میابیم. متغیر تصادفی 
+$X_{u,v,w}$ 
+را اینگونه تعریف میکنیم که اگر تشکیل مثلث دادند، مساوی یک است در غیر این صورت مساوی صفر.
+$$
+\mathbbm{P}[X_{u,v,w} = 1] = p^3 
+$$
+چون متغیر برنولی است، داریم :
+$$
+\mathbbm{E}[X_{u,v,w}] = \mathbbm{P}[X_{u,v,w} = 1] = p^3
+$$
+حال تعداد مثلث ها را برابر ا $T$ بگیرید. داریم:
+$$
+T = \sum_{u,v,w} X_{u,v,w} \Rightarrow \mathbbm{E}[T] = \sum_{u,v,w} \mathbbm{E}[X_{u,v,w}] 
+$$
+نعداد کل سه تایی های نامرتب برابر با 
+${n \choose 3}$
+است. پس میانگین روابط تراگذری برابر است با :
+$$
+\mathbbm{E}[T] = {n \choose 3} p^3
+$$
+حال سراغ رابطه دوستی رقابت میرویم. 
+
+\textbf{راه شهودی:} 
+
+احتمال اینکه یک سه تایی تشکیل رقابت دهند 
+$3 p^2(1-p)$
+است. چون سه راه برای انتخاب راس مشترک وجود دارد.ین احتمال در واقع به طور میانگین نسبت تعداد رقابت ها به تعداد کل سه تایی هاست:
+$$
+3{n \choose 3} p^2(1-p)
+$$
+\textbf{راه ریاضی:}
+
+متغیر تصادفی برنولی
+$Y_{u,v,w}$
+را این گونه تعریف میکنیم که اگر این سه تایی تشکیل رابطه‌ی رقابت بدهند، برابر 1 است. در غیر این صورت برابر صفر است. \\
+برای تشکیل رابطه رقابت باید میان دو راس یال نباشد و میان آن دو راس و راس سوم یک یال وجود داشته باشد. پس به سه طریق قابل انجام است.
+$$
+\mathbbm{P}[Y_{u,v,w} = 1] = 3 p^2(1-p)
+$$
+چون متغیر برنولی است، داریم :
+$$
+\mathbbm{E}[Y_{u,v,w}] = \mathbbm{P}[Y_{u,v,w} = 1] = 3 p^2(1-p)
+$$
+حال تعداد رقابت ها را برابر ا $R$ بگیرید. داریم:
+$$
+R = \sum_{u,v,w} Y_{u,v,w} \Rightarrow \mathbbm{E}[R] = \sum_{u,v,w} \mathbbm{E}[Y_{u,v,w}] 
+$$
+نعداد کل سه تایی های نامرتب برابر با 
+${n \choose 3}$
+است. پس میانگین تعداد روابط رقابتی برابر است با :
+$$
+\mathbbm{E}[R] = 3 {n \choose 3}  p^2(1-p)
+$$
+
+\textbf{پرسش تئوری 8.}
+برای محاسبه این کسر (بگیرید$\eta$)، احتمال این را که 3 راس $u,v,w$ تشکیل مثلث بدهند به شرط اینکه هر کدام حداقل به یک راس وصل باشند حساب میکنیم. پیشامد اتصال هر کدام از این سه راس به حداقل یک راس از سه راس را $B$ بگیرید.
+$$
+\eta = \mathbbm{P}[\text{\rl{تراگذری}}|B] = \frac{\mathbbm{P}[{\text{\rl{تراگذری}}\cap B}]}{\mathbbm{P}[B]}
+$$
+بنابر تعریف واضح است که
+$
+(\text{\rl{پیشامد تراگذری}})\subseteq B
+$
+ .
+ همچنین پیشامد تراگذری و رقابت با هم ناسازگار بوده و 
+ $B$
+ همان اجتماعشان است.
+ $$
+ \Rightarrow \mathbb{P}[B] = \mathbbm{P}[\text{\rl{تراگذری}} ] + \mathbbm{P}[\text{\rl{رقابت}} ]
+  $$
+\begin{align*}
+ \Rightarrow \mathbbm{P}[\text{\rl{تراگذری}}|B] = \frac{\mathbbm{P}[\text{\rl{تراگذری}} ]}{\mathbbm{P}[\text{\rl{تراگذری}} ] + \mathbbm{P}[\text{\rl{رقابت}} ]} &= \frac{p^3}{p^3 + p^2(1-p)}\\\eta &= \frac{p}{3 - 2p}
+\end{align*}
+ که این همان کسر خواسته شده است. برای $p=0.2$ داریم 
+ $\eta \cong 0.07692$
+ که برابر با کسر زیر است:
+ $$
+ \frac{n_{\text{\rl{تراگذری}}}}{n_{\text{\rl{تراگذری}}} + n_{\text{\rl{رقابت}}}} \cong 
+ 0.076876
+ $$
+ برای $p=0.00016$ هم نتایج تئوری و شبیه سازی یکسان است.
+\newline
+\textbf{پرسش شبیه سازی 5.}
+برای هر گره وصل بودن همسایه های گره را در دو حلقه بررسی میکنیم.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=1]{project_pictures/5_1.png}}
+\caption{نتیجه در پایین تصویر }
+\end{figure} 
+\textbf{پرسش تئوری 9.}
+در مثال واقعی همان طور که از شکل صورت سوال نیز پیداست، روابط به صورت خوشه ای است به این معنا که چند گروه دوستی یا چند جامعه ی کوچکتر وجود دارد که در آن همه ی راس ها با هم در ارتباط هستند. تعدادی کمی یال هم بعضی راس های خوشه ها را به راس های خوشه های دیگر مربوط میکند. این به این معناست که مثلا در یک خوشه $n_i$ تایی، تعداد دوستی های بین دوست های یک شخص در مرتبه $n_i^2$ است  (چون هر شخص $n_i-1$ تا دوست دارد و هر یک از دوستان او با $n_i - 1$ نفر از این گروه دوستی دوست است پس دوستی های اطراف آن $(n_i-1)^2$ است.) پس  میانگین آن به مقدار قابل توجه بزرکتری از یک است. برخلاف شبیه سازی 5 که کوچک تر از یک است. بنابراین در مثال واقعی این عدد بیشتر است.
+\newline
+\textbf{پرسش تئوری 10.}
+فرض کنید $X_i$ تعداد دوستی های بین دوستان شخص $i$ ام و $K_i$ تعداد دوست های فرد $i$ ام باشد.
+ابتدا رابطه زیر را برای امید ریاضی داریم:
+$$
+\mathbbm{E}[X_i] = \mathbbm{E}[\mathbbm{E}[X|K_i = k]]
+$$
+$X_i$ 
+به شرط 
+$K_i = k$
+توزیع 
+$Binomial(\frac{k(k-1)}{2},p)$
+دارد پس میانگین $X_i$  برابر با 
+$\frac{k(k-1)}{2}p$
+خواهد بود.
+$$
+\mathbbm{E}[X_i] = \mathbbm{E}[\frac{k(k-1)}{2}p] 
+$$
+$K_i$ هم توزیع 
+$Binomial(n-1,p)$
+دارد.
+$$
+\sum_{k=1}^{n-1} k(k-1){n-1 \choose  k} p^k (1-p)^{n-k-1}  = \sum_{k=1}^{n-1} \frac{(n-1)(n-2)(n-3)!}{(k-2)!(n-1-k)!}p^2 p^{k-2} (1-p)^{n-k-1}
+$$
+$$
+= (n-1)(n-2)p^2 \sum_{k=1}^{n-1} {n-3  \choose k-2}  p^{k-2} (1-p)^{n-k-1}
+$$
+که عبارت جلوی $\sum$
+همان باینومیال است و تمامی مقادیر باینومیال را جمع میکند. طبق تعریف تابع توزیع جمع آن یک است.
+$$
+\mathbbm{E}[k(k-1)] = (n-1)(n-2)p^2
+$$
+$$
+\Rightarrow \mathbbm{E}[X_i] = \frac{(n-1)(n-2)p^3}{2}
+$$
+که برای این سوال مشود 
+$
+0.01346
+$
+که نزدیک شبیه سازی 5 است.
+\section*{5}
+\textbf{پرسش شبیه سازی 6.}
+برای این بخش، ابتدا برای هر گره مینیموم فاصله ی آن گره تا گره های دیگر(که به آن راه دارد) را میابیم. سپس روی همین مقادیر میانگین گیری میکنیم و میانگین فاصله برای هر راس را حساب میکنیم. چک کردن اینکه گره person به node راه دارد و اینکه فاصله این دو چقدر است، به ترتیب با دستورات زیر صورت میگیرد:
+\begin{latin}
+\lstset{language=python}
+\begin{lstlisting}
+networkx.shortest_paths.has_path(g, person, node)
+networkx.shortest_paths.generic.shortest_path_length(g, person, node)
+\end{lstlisting}
+\end{latin}
+پس از این، روی اعداد به دست آمده از همه گره ها میانگین گیری میکنیم.(گره هایی که ارتباط ندارند یا گره های ایزوله اثری در میانگین ندارند)
+\begin{figure}[H]
+\centerline{\includegraphics[scale=0.8]{project_pictures/6_1.png}}
+\caption{نتیجه در پایین تصویر }
+\end{figure} 
+\textbf{پرسش شبیه سازی 7.}
+ابتدا برای هر راس دورترین راس را پیدا کرده و فاصله آن را حساب میکنیم سپس مقدار بیشینه این فاصله را میان تمامی رئوس پیدا میکنیم.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=0.9]{project_pictures/7_1.png}}
+\caption{نتیجه در پایین تصویر، تابع بالا برای پیدا کردن قطر گراف }
+\end{figure} 
+\textbf{پرسش شبیه سازی 8.}
+حال برای $n$ از 10 تا 200 با گام 20 شبیه سازی را تکرار میکنیم.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=0.9]{project_pictures/8_1.png}}
+\caption{نمودار }
+\end{figure}
+این نمودار در بینهایت به عدد 2 میل میکند.
+\newline
+\textbf{پرسش تئوری 11.}
+احتمال اینکه راسی مانند $w$ همسایه مشترک $u$ و $v$ باشد، هم ارز است با احتمال اینکه هر دو به $w$ وصل باشند. این احتمال برابر است با $p^2$
+و خواسته مساله متمم این است
+پس برای همه $n-2$ راس دیگر داریم:
+$$
+\mathbbm{P}[I_{u,v} = 1] = (1 - p^2)^{n-2}
+$$
+\newline
+\textbf{پرسش تئوری 12.}
+طبق تعریف 
+$I_{u,v}$
+داریم:
+$$
+X = \sum_{u,v} I_{u,v} \Rightarrow \mathbbm{E}[X] = \sum_{u,v} \mathbbm{E}[I_{u,v}] 
+$$ 
+که چون متغیر برنولی است، داریم:
+$\mathbbm{E} [I_{u,v}] = \mathbbm{P}[I_{u,v} = 1]$
+پس:
+$$
+\mathbbm{E} [X_n] = {n \choose 2} (1-p^2)^{n-2} 
+$$
+\newline
+\textbf{پرسش تئوری 13.}
+با استفاده از نامساوی مارکف (چون متغیر تصادفی $X_n$ مثبت است) داریم:
+$$
+\mathbbm{P}[X_n \geqslant 1] \leqslant \frac{\mathbbm{E}[X_n]}{1} 
+$$
+$$
+\Rightarrow \mathbbm{P}[X_n \geqslant 1] \leqslant {n \choose 2}(1-p^2)^{n-2}
+$$
+حال با میل دادن $n$ به بینهایت داریم:
+(با توجه به رابطه
+$x = e^{\ln(x)}$
+)
+$$
+\lim_{n \to \infty}  {n \choose 2}(1-p^2)^{n-2} = \lim_{n \to \infty}   \frac{n(n-1)}{2} e^{\ln(1-p^2)(n-2)}
+$$
+با توجه به اینکه 
+$1-p^2 \leqslant 1$
+پس توان نمایی به منفی بینهابت میرود. رشد و افت تابع نمایی از چندجمله ای بیشتر است پس 
+$$
+\lim_{n \to \infty}  {n \choose 2}(1-p^2)^{n-2}  = 0
+$$
+$$
+\Rightarrow \lim_{n \to \infty} \mathbbm{P}[X_n \geqslant 1] \leqslant 0 \Rightarrow  \lim_{n \to \infty} \mathbbm{P}[X_n \geqslant 1] = 0
+$$
+\textbf{پرسش تئوری 14.}
+در پرسش قبل اثبات کردیم که وقتی $n$ به بینهایت میل میکتد،
+$\mathbbm{P}[X_n \geqslant 1]$
+فارغ از مقدار $P$، به صفر میل میکند. به عبارت دیگر در $n$  های بسیار بزرگ تعداد راس هایی که هیچ همسایه مشترکی ندارند، با احتمال بالا(فارغ از مقدار $p$) به صفر میل میکند و هر دو راس حداقل یک همسایه مشترک خواهند داشت. پس بیشترین فاصله بین دو راس 2 خواهد بود. این با شبیه سازی 8 تطابق کامل دارد.
+\section*{6}
+\textbf{پرسش شبیه سازی 9.}
+دوباره از کد پرسش 3 قسمت تراگذری بهره میبریم.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=0.9]{project_pictures/9_1.png}}
+\caption{نتیجه در پایین تصویر  }
+\end{figure}
+\textbf{پرسش شبیه سازی 10.}
+این بار در بازه ی 10 تا 100 با گام 10 و با 
+$p = \frac{60}{n^2}$
+نمودار را میکشیم.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=0.9]{project_pictures/10_1.png}}
+\caption{نمودار به ازای $p=\frac{60}{n^2}$  }
+\end{figure}
+در بینهایت به صقر میل میکتن که این موضوع با تئوری هم خوانی دارد. همان طور که از تئوری 7 دیدیم و در تئوری 16 هم خواهیم دید، میانگین تعداد مثلث ها به صورت زیر است:
+$
+{ n \choose 3} p^3 
+$
+حال با جایگداری و در $n$ های بزرگ خواهیم داشت:
+$$
+\frac{n(n-1)(n-2)}{6} \frac{60^3}{n^6} \approx \frac{ 60^3n^3}{6n^6} \approx 0 
+$$
+\textbf{پرسش شبیه سازی 11.} 
+این بار به ازای $p=0.34$ شبیه سازی بخش قبل را تکرار میکنیم.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=0.9]{project_pictures/11_1.png}}
+\caption{نمودار به ازای $p= 0.34$  }
+\end{figure}
+در $n$ های بزرگ به بینهایت میرود و این طبق تئوری منطقی است.
+$$
+{n \choose 3} p^3 \approx \frac{n^3}{6}0.34^3\sim n^3
+$$
+که به مقدار متناهی میل نخواهد کرد.
+\newline
+\textbf{پرسش شبیه سازی 12.} 
+حال به ازای 
+$p = \frac{1}{n}$
+شبیه سازی را انجام میدهیم.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=0.9]{project_pictures/12_1.png}}
+\caption{نمودار به ازای $p= \frac{1}{n}$  }
+\end{figure}
+که حالت نوسانی دارد. این نمودار به علت مقادیر داده شده با تئوری ناسازگار است. طبق تئوری بایستی صعودی باشد و به یک مقدار ثابت میل کند.
+$$
+{n \choose 3} p^3 \approx \frac{n^3}{6}(\frac{1}{n^3}) = \frac{1}{6}
+$$ 
+حال با استفاده از دستور زیر داده های تجمعی را برای بردار داده های بخش قبل حساب میکنیم.
+\begin{latin}
+\lstset{language=python}
+\begin{lstlisting}
+networkx.cumsum(y)
+\end{lstlisting}
+\end{latin}
+سپس در یک حلقه با تقسیم بر $i+1$ میانگین ها را حساب میکنیم که $i$ اندیس آن داده داخل آرایه داده هاست.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=0.9]{project_pictures/12_2.png}}
+\caption{کد دربالای تصویر و نمودار تجمعی در پایین تصویر }
+\end{figure}
+که به دلیل ناسازگاری نمودار قبلی با تئوری، این هم تا حدی ناسازگاری دارد.
+\newline
+\textbf{پرسش تئوری 15.}
+بایستی میان هر جفت از آن ها یک یال با احتمال $p$ باشد. پس:
+$$
+\mathbbm{P}[I_{u,v,w} = 1] = p^3
+$$
+\newline
+\textbf{پرسش تئوری 16.}
+با استفاده از تعریف 
+$I_{u,v,w}$
+داریم:
+$$
+T_{3,n} = \sum_{u,v,w} I_{u,v,w} \Rightarrow \mathbbm{E}[T_{3.n}] = \sum_{u,v,w} \mathbbm{E}[I_{u,v,w}]
+$$
+$I_{u,v,w}$
+متغیر برنولی است پس 
+$\mathbbm{E}[I_{u,v,w}] = \mathbbm{P}[I_{u,v,w} = 1]$
+و تعداد سه تایی 
+$(u,v,w)$
+هم برابر است با 
+${n \choose 3}$
+پس:
+$$
+\mathbbm{E}[T_{3,n}] = {n \choose 3} p^3
+$$
+\newline
+\textbf{پرسش تئوری 17.}
+طبق نامساوی مارکف داریم:
+$$
+\mathbbm{P}[T_{3,n} \geqslant 1] \leqslant \frac{\mathbbm{E}[T_{3,n}]}{1} \Rightarrow \mathbbm{P}[T_{3,n}  \geqslant 1] \leqslant {n \choose 3} p^3
+$$
+$$
+\Rightarrow \mathbbm{P}[T_{3,n}  \geqslant 1] \leqslant \frac{n(n-1)(n-2)}{3!\,n^6}
+$$
+حال با میل دادن $n$ به بینهایت داریم:
+$$
+\lim_{n \to \infty} \mathbbm{P}[T_{3,n}  \geqslant 1] \leqslant \lim_{n \to \infty} \frac{n(n-1)(n-2)}{3!\,n^6} 
+$$
+$$
+\lim_{n \to \infty} \mathbbm{P}[T_{3,n} \geqslant 1] \leqslant 0 \Rightarrow \lim_{n \to \infty} \mathbbm{P}[T_{3,n}  \geqslant 1] = 0
+$$
+\newline
+\textbf{پرسش تئوری 18.}
+با توجه به تعریف $Y_n$  از شرط دوم داریم:(بگیرید :
+$\mathbbm{P}[Y_n=i] = P_n(i)$
+)
+
+$$
+\lim_{n \to \infty} \frac{\mathrm{Var[Y_n]}}{\mathbbm{E}^2[Y_n]} = 0 \Rightarrow \lim_{n \to \infty} \frac{\sum_{i=0}^{\infty} (i-\mathbb{E}[Y_n])^2}{\mathbbm{E}^2[Y_n]}P_n(i) = 0
+$$
+با توجه به خواص حد داریم:
+$$
+\Rightarrow  \sum_{i=0}^{\infty} (\lim_{n \to \infty} \frac{(i-\mathbb{E}[Y_n])^2}{\mathbbm{E}^2[Y_n]}P_n(i)) = 0
+$$
+چون همه ی جملات داخل جمع نامنفی هستند و مساوی صفر شدند،پس همه جملات صفر است. من جمله در 
+$i = 0$
+. در $i=0$ خواهیم داشت:
+$$\lim_{n \to \infty}\frac{(\mathbb{E}[Y_n])^2}{\mathbbm{E}^2[Y_n]}P_n(0) = 0
+$$
+$$
+\Rightarrow \lim_{n \to \infty} P_n(0) = 0 
+\Rightarrow \lim_{n \to \infty} \mathbbm{P}[Y_n \geqslant 1] = 1
+$$
+\newline
+\textbf{پرسش تئوری 19.}
+با توجه به اینکه 
+$I_{u,v,w}$
+متغیر تصادفی برنولی هست، داریم:
+\begin{align*}
+\mathbbm{E}[I_{u,v,w}I_{u',v',w'}] =\mathbbm{P}[I_{u,v,w} = 1,I_{u',v',w'}=1](1)(1)
+\mathbbm{P}[I_{u,v,w} = 0,I_{u',v',w'}=1](0)(1) \\
+ + \mathbbm{P}[I_{u,v,w} = 1,I_{u',v',w'}=0](1)(0) + \mathbbm{P}[I_{u,v,w} = 0,I_{u',v',w'}=0](0)(0)
+\end{align*}
+$$
+\Rightarrow \mathbbm{E}[I_{u,v,w}I_{u',v',w'}] =\mathbbm{P}[I_{u,v,w} = 1,I_{u',v',w'}=1]
+$$
+
+سه حالت برای 
+$u,v,w,u',v',w'$
+وجود دارد.
+\begin{itemize}
+\item هیچ یالی بین دو مثلث مشترک نباشد(هیچ یا یک راس مشترک)
+
+به 6 یال نیاز داریم:
+$$
+\mathbbm{P}[I_{u,v,w} = 1,I_{u',v',w'}=1] = p^6 \Rightarrow \mathbbm{E}[I_{u,v,w}I_{u',v',w'}] = p^6
+$$ 
+\item یک یال مشترک باشد(دو راس مشترک)
+
+به 5  یال نیاز داریم:
+$$
+\mathbbm{P}[I_{u,v,w} = 1,I_{u',v',w'}=1] = p^5 \Rightarrow \mathbbm{E}[I_{u,v,w}I_{u',v',w'}] = p^5
+$$
+\item سه یال مشترک(سه راس مشترک)
+
+به 3 یال نیاز داریم:
+$$
+\mathbbm{P}[I_{u,v,w} = 1,I_{u',v',w'}=1] = p^3 \Rightarrow \mathbbm{E}[I_{u,v,w}I_{u',v',w'}] = p^3
+$$
+\end{itemize}
+
+\textbf{پرسش تئوری 20.}
+با توجه به رابطه 
+$T_{3,n} = \sum_{u,v,w} I_{u,v,w}$
+داریم:
+\begin{equation*}
+\mathbbm{E}[T_{3,n}^2] = \mathbbm{E}[(\sum_{u,v,w} I_{u,v,w})^2] = \sum_{u,v,w,u',v',w'} \mathbbm{E}[I_{u,v,w}I_{u',v',w'}] \tag{1.20}
+\end{equation*}
+که حالتهای مختلف میانگین آن را در بخش قبل حساب کردیم. حال سراغ تعداد حالت های مختلف  آن میرویم:
+\begin{itemize}
+\item تعداد زوج مرتب مثلث هایی که با هم هیچ راس مشترکی ندارند یا یک راس مشترک دارند
+$${n \choose 3}{n-3 \choose 3} + {n \choose 3}(3){n-3 \choose 2} \thickapprox \left( \frac{n^3}{6} \right)^2 + \frac{n^3}{6}(3)( \frac{n^2}{2}) \thickapprox  \frac{n^6}{36}$$
+که 3 در جمله دوم تعداد راه های انتخاب راس های مشترک است
+\item تعداد زوج مرتب مثلث هایی که با هم دو راس مشترک دارند
+$${n \choose 3}{3 \choose 1}{n-3 \choose 1}  \thickapprox \frac{n^3}{6}(3)(n) = \frac{n^4}{2}$$ 
+\item تعداد زوج مرتب مثلث هایی که با هم سه راس مشترک دارند
+$${n \choose 3} \thickapprox \frac{n^3}{6}$$
+\end{itemize}
+\begin{align*}
+\mathbbm{E}[T_{3,n}^2] &\thickapprox  \frac{n^3}{6}  p^3 + \frac{n^4}{2} p^5  + \frac{n^6}{36} p^6 \\
+\end{align*}
+اگر $p$ به $n$ وابسته نباشد، فقط جمله آخر میماند.
+\newline
+\textbf{پرسش تئوری 21.}
+با استفاده از رابطه 
+$\mathrm{Var} [T_{n,3}] =\mathbbm{E}[T_{n,3}^2] - (\mathbbm{E}[T_{n,3}])^2$
+و جواب آخر پرسش تئوری 16 داریم:
+$$
+\mathrm{Var} [T_{n,3}] \thickapprox \frac{n^3}{6}  p^3 + \frac{n^4}{2} p^5  + \frac{n^6}{36} p^6  - \frac{n^6}{36}p^6 =  \frac{n^3}{6}  p^3 + \frac{n^4}{2} p^5
+$$
+$$
+\Rightarrow \lim_{n \to \infty} =\frac{\mathrm{Var}[Y_n]}{\mathbb{E}^2[Y_n]} = \lim_{n \to \infty}  \frac{\frac{n^4}{2}p^5}{\frac{n^6}{36}p^6} =  \frac{18}{c}  \lim_{n \to \infty} \frac{1}{n^2} = 0
+$$
+\textbf{پرسش تئوری 22.}
+با توجه به قضیه 1 و پرسش قبل، نتیجه مبشود 
+$ \lim_{n \to \infty} \mathbbm{P}[T_{3,n} \geqslant 1] = 1$
+\\
+این به این معناست که احتمال نبود هیچ مثلثی در گراف، با افزایش $n$ بسیار کوچک میشود.
+\newline
+\textbf{پرسش تئوری 23.}
+ابتدا ثابت میکنیم اگر متغیر تصادفی $X$ از توزیع 
+$poisson(\lambda)$ 
+پیروی کند، آنگاه 
+$\mathbbm{E}[(X)_r] = \lambda^r$:
+$$
+M_X(t) = \mathbbm{E}[t^X] = \sum_{k=0}^{\infty} \frac{e^{-\lambda}(\lambda^k)}{k!} t^k = e^{-\lambda} \sum_{k=0}^{\infty} \frac{(t\lambda)^k}{k!} = e^{-\lambda} e^{t\lambda}
+$$
+\begin{equation*}
+\Rightarrow M_X(t) = e^{\lambda(t-1)}\tag{1.22}
+\end{equation*}
+$$
+\Rightarrow \mathbbm{E}[(X)_r] = \frac{\partial^r}{\partial t^r}M_X(t) |_{t=1} = \lambda^r e^{\lambda(t-1)} |_{t=1} 
+$$
+$$
+\Rightarrow \mathbbm{E}[(X)_r] = \lambda^r
+$$
+حال ثابت میکنیم که اگر 
+$\mathbbm{E}[(X)_r] = \lambda^r$
+آنگاه 
+$ X \sim poisson(\lambda)$:
+$$
+\Rightarrow \frac{\partial^r}{\partial t^r} M_X(t) |_{t=1} = \lambda^r
+$$
+حال تابع 
+$M_X(t)$
+را حول 
+$t=1$
+بسط تیلور میدهیم:
+$$
+M_X(t) = \sum_{r=0}^{\infty} \frac{1}{r!}\frac{\partial^r}{\partial t^r}M_X(t) |_{t=1} (t-1)^r  = \sum_{r=0}^{\infty} \frac{\lambda^r}{r!} (t-1)^r = \sum_{r=0}^{\infty} \frac{(\lambda(t-1))^r}{r!} 
+$$
+که این همان سری متناظر با 
+$e^{\lambda(t-1)}$
+است که با توجه به 
+(1.22)
+همان تابع گشتاور فاکتوریل پوآسون با پارامتر $\lambda$ است.(با فرض اینکه یک تابع گشتاور فاکتوریل متعلق به تنها یک توزیع است)
+\newline
+\textbf{پرسش تئوری 24.}
+با استفاده از پرسش تئوری 16 در $n$ های بزرگ داریم:
+$$
+\mathbbm{E}[(T_{3,n})_1] = \mathbbm{E}[T_{3,n}] = {n \choose 3}p^3 \thickapprox \frac{n^3}{6}\frac{c^3}{n^3} = \frac{c^3}{6}
+$$
+برای دومی داریم:
+$$
+\mathbbm{E}[(T_{3,n})_2] = \mathbbm{E}[T_{3,n}(T_{3,n}-1)] = \mathbbm{E}[T_{3,n}^2] - \mathbbm{E}[T_{3,n}]  
+$$
+با توجه به نتایج پرسش 16 و 20 تئوری، داریم:
+\begin{align*}
+\Rightarrow \mathbbm{E}[(T_{3,n})_2]  \thickapprox  \frac{n^3}{6}  p^3 + \frac{n^4}{2} p^5  + \frac{n^6}{36} p^6 - \frac{n^3}{6}p^3 &= \frac{c}{2n} + \frac{c^6}{36}\\
+&\thickapprox \frac{c^6}{36} = \lambda^2
+\end{align*} 
+$$
+\Rightarrow  \mathbbm{E}[(T_{3,n})_2] \thicksim \lambda^2
+$$
+\textbf{پرسش تئوری 25.}
+$T_{3,n}$
+جمع یک سری متغیر تصادفی برنولی است که در $n$ های نه چندان بزرگ مستقل نیستند. اما با توجه به راهمایی سوال در $n$ های بزرگ، تقریبا هیچ کدام از
+$I_{u,v,w}$ 
+ها راس مشترک ندارند.( طبق راهنمایی سول تعداد آن هایی که راس مشترک دارند بسیار کمتر از آنهایی است که ندارند). پس 
+$I_{u,v,w}$
+ها مستقل خواهند شد. میدانیم که جمع $n$ متغیر تصادفی برنولی با پارامتر $p$ توزیع
+$Binomial(n,p)$
+خواهد داشت. در اینجا تعداد 
+$I_{u,v,w}$
+ها 
+${n \choose 3} \approx \frac{n^3}{6} $
+است که احتمال یک بودن آن طبق بخش های قبل $p^3$ است. پس در $n$ های بزرگ 
+$T_{3,n} \thicksim Binomail({n \choose 3},p^3)$
+$$
+\Rightarrow M_{T_{4,n}}(t) =  \mathbbm{E}[t^{T_{3,n}}] = \sum_{k=0}^{{n \choose 3}} {{n \choose 3} \choose k} t^k (p^3)^k(1-p^3)^{{n \choose 3} - k} = \sum_{k=0}^{{n \choose 3}} {{n \choose 3} \choose k}  (tp^3)^k(1-p^3)^{{n \choose 3} - k}
+$$
+که عبارت بالا بسط دوجمله ایست.
+$$
+\Rightarrow M_{T_{3,n}}(t) = (tp^3 + 1 - p^3)^{n \choose 3}
+$$
+پس داریم:
+$$
+\mathbbm{E}[(T_{3,n})_r] = \frac{\partial^r}{\partial t^r}M_{T_{3,n}}(t)\, \vline_{\,t=1} = {n \choose 3}({n \choose 3} - 1)...({n \choose 3} - r +1)p^{3r}(tp^3 + 1 - p^3)^{{n \choose 3} - r} \,\vline_{\,t=1}
+$$
+$$
+\approx \frac{n^3}{6}(\frac{n^3}{6} -1)...(\frac{n^3}{6} - r + 1) p^{3r} \approx (\frac{n^3}{6})^r p^r = (\frac{n^3}{6}\frac{c^3}{n^3})^r = \lambda^r
+$$
+$$
+\mathbbm{E}[(T_{3,n})_r] \sim \lambda^r
+$$
+\section*{7}
+\textbf{پرسش شبیه سازی 13.}
+تابع زیر برای پیدا کردن راس های منفرد است.
+\begin{latin}
+\lstset{language=python}
+\begin{lstlisting}
+networkx.isolates(g)
+\end{lstlisting}
+\end{latin}
+و تابع زیر برای چک کردن هم بندی (خروجی boolean است)
+\begin{latin}
+\lstset{language=python}
+\begin{lstlisting}
+networkx.is_connected(g)
+\end{lstlisting}
+\end{latin}
+100 متاگراف با 
+$n = 150$
+و
+$p = 0.2$
+میسازیم.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=0.9]{project_pictures/13_1.png}}
+\caption{نتیجه در پایین تصویر }
+\end{figure}
+\textbf{پرسش شبیه سازی 14.}
+به ازای $n$ از 10 تا 150 با گام 10 و به ازی 
+$p = \frac{4\ln(n)}{n}$
+شبیه سازی قبل را تکرار میکنیم.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=0.9]{project_pictures/14_1.png}}
+\caption{ نمودار بالا احتمال عدم وجود فرد بدون دوست و نمودار پایین احتمال هم‌بندی گراف}
+\end{figure}
+که این سازگار است با آنچه در تئوری خواهیم دید.
+\newline
+\textbf{پرسش شبیه سازی 15.}
+این بار به ازای 
+$p = \frac{4}{n}$
+شبیه سازی قبلی را تکرار میکنیم.
+\begin{figure}[H]
+\centerline{\includegraphics[scale=0.9]{project_pictures/15_1.png}}
+\caption{ نمودار بالا احتمال عدم وجود فرد بدون دوست و نمودار پایین احتمال هم‌بندی گراف}
+\end{figure}
+\textbf{پرسش تئوری 26.}
+$A_i^{(j)}$
+  را پیشامد اینکه $i$امین حالت انتخاب $j$ راس از $n$ راس، از بقیه راس ها جدا باشد. واضح است که پیشامد 
+$K_i^{(j)} = 1$
+زیر مجموعه ی 
+$A_i^{(j)}$
+است:
+$$
+ (K_i^{(j)} = 1 ) \subseteq A_i^{(j)} \Rightarrow \mathbbm{P}[K_i^{(j)} = 1] \leqslant \mathbbm{P}[A_i^{(j)}] 
+$$
+از طرفی احتمال اینکه همه $j$ راس از بقیه راس ها جدا باشند، 
+$((1-p)^{n-j})^j$
+است. پس از بالا داریم:
+$$
+\Rightarrow \mathbbm{P}[K_i^{(j)} = 1] \leqslant (1-p)^{j(n-j)}
+$$
+\textbf{پرسش تئوری 27.}
+با توجه به تعریف $X_j$ و 
+$K_i^{(j)}$
+داریم:(تعداد کل 
+$K_i^{(j)}$
+ها 
+${n \choose j}$
+است.)
+$$
+X_j = \sum_{i=1}^{k} K_i^{(j)} \Rightarrow \mathbbm{E}[X_j ] = \sum_{i=1}^{{n \choose j}} \mathbbm{E}[K_i^{(j)}] 
+$$
+چون 
+$K_i^{(j)}$ 
+متغیر تصادفی برنولی است، پس 
+$\mathbbm{E}[K_j^{(i)}] = \mathbbm{P}[K_i^{(j)} = 1] $
+\\
+با توجه به نامساوی پرسش 26 خواهیم داشت:
+$$
+\mathbbm{E}[X_j] \leqslant  \sum_{i=1}^{{n \choose j}} (1-p)^{j(n-j)}  
+$$
+$$
+\Rightarrow \mathbbm{E}[X_j] \leqslant   {n \choose j} (1-p)^{j(n-j)}
+$$
+\textbf{پرسش تئوری 28.}
+با توجه به تعریف $X$ داریم:( همچنین از نامساوی بخش قبل)
+$$
+X = \sum_{j=1}^{n} X_j \Rightarrow  \mathbbm{E}[X] = \sum_{j=1}^{n} \mathbbm{E}[X_j] \leqslant \sum_{j=1}^{n}  {n \choose j} (1-p)^{j(n-j)}
+$$
+با توجه به نامساوی صورت سوال خواهیم داشت:
+$$
+\mathbbm{E}[X] \leqslant \sum_{j=1}^{n} \frac{1}{n^{1.7}} = \frac{n}{n^{1.7}}
+$$
+$$
+\Rightarrow \mathbbm{E}[X] \leqslant \frac{1}{n^{0.7}}
+$$\
+در حد به سمت بینهایت طبق قضیه ساندویچ خواهیم داشت:
+$$
+0 \leqslant \mathbbm{E}[X] \leqslant \frac{1}{n^{0.7}} \Rightarrow  \lim_{n \to \infty}0 \leqslant\lim_{n \to \infty} \mathbbm{E}[X] \leqslant \lim_{n \to \infty}\frac{1}{n^{0.7}}
+$$
+$$
+\Rightarrow \lim_{n \to \infty} \mathbbm{E}[X] = 0
+$$
+\textbf{پرسش تئوری 29.}
+ابتدا با استفاده از تعریف $X$ داریم:
+$$
+\mathbbm{P}[\mathcal{G}(n,p)\text{\rl{هم بند بودن}}] = \mathbbm{P}[X = 0] = 1 - \mathbbm{P}[X \geqslant 1] 
+$$
+\begin{equation*}
+\lim_{n \to \infty} \mathbbm{P}[\mathcal{G}(n,p)\text{\rl{هم بند بودن}}] = 
+1 - \lim_{n \to \infty}  \mathbbm{P}[X \geqslant 1] \tag{1.29}
+\end{equation*}
+طبق نامساوی مارکف داریم:
+$$
+\mathbbm{P}[X \geqslant 1]  \leqslant \frac{\mathbbm{E}[X]}{1} 
+$$
+$$
+\Rightarrow \lim_{n \to \infty} \mathbbm{P}[X \geqslant 1]  \leqslant \lim_{n \to \infty} \mathbbm{E}[X]
+$$
+طبق پرسش قبل 
+$\lim_{n \to \infty}\mathbbm{E}[X] = 0  $
+پس :
+$$
+\lim_{n \to \infty} \mathbbm{P}[X \geqslant 1]  = 0
+$$
+با جایگذاری در 
+(1.29)
+خواهیم داشت:
+$$
+\lim_{n \to \infty} \mathbbm{P}[\mathcal{G}(n,p)\text{\rl{هم بند بودن}}]
+= 1 
+$$
+\end{persian}
+\end{document}
